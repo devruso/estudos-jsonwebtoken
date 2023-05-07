@@ -1,9 +1,10 @@
 ## Entendendo JWT e encriptação com Bcrypt
 
+\n
 
-<h2>
-Praticando validação de dados bcrypt e jwt
-</h2>
 <p>
-Utilizei a extensão rest client para fazer requisições
+extensão rest client para fazer requisições \n
+
+A junção jwt + bcrypt gera dois níveis de criptografia para o código, ocasionando mais segurança para a aplicação.
+
 </p>

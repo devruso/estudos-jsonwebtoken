@@ -1,22 +1,16 @@
-const dotenv = require("dotenv");
+require("dotenv").config();
 const express = require("express");
-// bcrypt é assincrona, logo tds funções precisam ser tb
-const bcrypt = require("bcrypt")
 const app = express();
+// bcrypt é assincrona, logo tds funções precisam ser tb
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const { authenticateToken } = require("./authServer");
+
+
+
 app.use(express.json());
 
 
-
-const posts = [
-    {
-        nome: "Jamilson Pestana",
-        senha:"123456"
-    },
-    {
-        nome: "Jamilson Pestana2",
-        senha:"123456"
-    }
-];
 const users = [];
 
 app.get("/users", (req, res) =>{
@@ -41,32 +35,12 @@ app.post("/users", async (req, res)=>{
     }
 })
 
-app.post("/users/login", async(req,res) =>{
-    const user = users.find(user => req.body.name === user.name);
-    if(user === null){
-        res.status(400);
-    }
-    try{
-        // primeiro parametro da compare é a senha que o usuario está ponto, o segundo é a senha criptografada
-         
-       if(await bcrypt.compare(req.body.senha, user.senha)){
-        res.send("Td certo");
-       }else{
-        res.status(400).send("senha errada");
-       };
-    }catch(err){
-        console.log(err);
-        res.status(500).send();
-    }
-})
 
-app.get("/posts", (req, res) =>{
+
+app.get("/posts",authenticateToken, (req, res) =>{
     res.json(posts);
 }); 
 
-app.get("/login", (req, res) =>{
-    app.get()
-})
 
 
 
